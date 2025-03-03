@@ -13,8 +13,8 @@ class AILocal:
         self.model = model
         self.stream = stream
         self.format = format
-        if self.format != 'json':
-            raise ValueError('Formato no soportado')
+        #if self.format != 'json':
+        #    raise ValueError('Formato no soportado')
         self.multimodal = Multimodal
 
 
@@ -35,9 +35,12 @@ class AILocal:
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": query})
+
+        user_message = {"role": "user", "content": query}
         if self.multimodal and image_path:
-            messages.append({'images': [{image_path}]})
+            user_message["images"] = [image_path]
+    
+        messages.append(user_message)
         
         response: ChatResponse = chat(model=self.model, messages=messages, format=self.format)
         return response.message.content
@@ -56,9 +59,12 @@ class AILocal:
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": query})
+            
+        user_message = {"role": "user", "content": query}
         if self.multimodal and image_path:
-            messages.append({'images': [{image_path}]})
+            user_message["images"] = [image_path]
+    
+        messages.append(user_message)
         
         stream = chat(model=self.model, messages=messages, stream=True, format=self.format)
 
