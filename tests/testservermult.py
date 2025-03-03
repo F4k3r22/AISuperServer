@@ -1,8 +1,8 @@
-from AISuperServer import InferenceServer
+from AISuperServer import SuperServer
 
 #Aún se esta implementando la inferencia de modelos multimodales
 
-app = InferenceServer(
+app = SuperServer(
     model='llama3.2-vision',
     stream=True,
     multimodal=True,

@@ -1,6 +1,6 @@
-from AISuperServer import InferenceServer
+from AISuperServer import SuperServer
 
-app = InferenceServer(
+app = SuperServer(
     model='deepseek-r1',
     stream=True,
     port=8080,

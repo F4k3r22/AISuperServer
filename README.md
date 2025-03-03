@@ -38,12 +38,12 @@ curl -fsSL https://ollama.com/install.sh | sh
 Ollama pull <modelo a usar>
 ```
 
-## Levantar tu servidor 
+## Levantar tu servidor
 
 ```python
-from AISuperServer import InferenceServer
+from AISuperServer import SuperServer
 
-app = InferenceServer(
+app = SuperServer(
     model='deepseek-r1', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
     stream=True,
     port=8080, # Recuerda el puerto donde haz configurado tu servidor para hacer las peticiones
@@ -71,6 +71,7 @@ print(health)
 ```
 
 ### API de query a tu modelo
+
 ```python
 import requests
 import json
@@ -89,6 +90,7 @@ print(query)
 ```
 
 ### API de query a tu modelo con respuesta en Stream
+
 ```python
 import requests
 import json
@@ -101,10 +103,10 @@ def test_query_stream():
         "system_prompt": "Eres un asistente útil y conciso.",
         "stream" : True
     }
-    
+  
     # Usar stream=True en la petición para recibir la respuesta por partes
     response = requests.post(url, json=payload, stream=True)
-    
+  
     if response.status_code == 200:
         # Procesar la respuesta SSE línea por línea
         for line in response.iter_lines():
