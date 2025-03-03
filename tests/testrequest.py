@@ -10,7 +10,8 @@ def test_healt():
 def test_query():
     url = 'http://0.0.0.0:8080/api/inference'
     payload = { "query": "Oye haz la función de fibonacci en TypeScript",
-                "system_prompt": "Eres un asistente útil y conciso."}
+                "system_prompt": "Eres un asistente útil y conciso.",
+                "stream": False}
     x = requests.post(url, json=payload)
     return x.json()
 
@@ -18,7 +19,8 @@ def test_query_stream():
     url = 'http://0.0.0.0:8080/api/inference'
     payload = {
         "query": "Oye haz la función de fibonacci en TypeScript",
-        "system_prompt": "Eres un asistente útil y conciso."
+        "system_prompt": "Eres un asistente útil y conciso.",
+        "stream" : True
     }
     
     # Usar stream=True en la petición para recibir la respuesta por partes
