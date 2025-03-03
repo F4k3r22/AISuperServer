@@ -1,4 +1,4 @@
-from AISuperServer import create_inference_server as InferenceServer
+from AISuperServer import InferenceServer
 
 app = InferenceServer(
     model='deepseek-r1',

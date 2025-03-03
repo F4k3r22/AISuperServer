@@ -1,11 +1,134 @@
-# AISuperServer
+<h1 align="center">AISuperServer</h1>
+
+<div align="center">
+  <img src="static/Logo.png" alt="AISuperServer Logo" width="200"/>
+</div>
 
 Es un experimento simple para crear una interfaz simple y rápida de server de Inferencia en Local, con Flask, Ollama, etc.
-
-### Se recomienda instalar Ollama antes de empezar a ejecutar el servidor y hacer una config rapida con el modelo que vas a usar en Local
 
 #### Instalación via Pypi
 
 ```
 pip install AISuperServer
+```
+
+## Inicio rápido
+
+### Instalación de Ollama
+
+#### macOS
+
+[Descargar](https://ollama.com/download/Ollama-darwin.zip)
+
+#### Windows
+
+[Descargar](https://ollama.com/download/OllamaSetup.exe)
+
+#### Linux
+
+```shell
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+[Instrucciones de instalación manual](https://github.com/ollama/ollama/blob/main/docs/linux.md)
+
+### Descarga del modelo a usar
+
+```
+Ollama pull <modelo a usar>
+```
+
+## Levantar tu servidor 
+
+```python
+from AISuperServer import InferenceServer
+
+app = InferenceServer(
+    model='deepseek-r1', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
+    stream=True,
+    port=8080, # Recuerda el puerto donde haz configurado tu servidor para hacer las peticiones
+    enable_memory_monitor=True
+)
+```
+
+Asi de facil es levantar tu servidor de inferencia local con AISuperServer en menos de 20 lineas de código
+
+## Peticiones a tu servidor
+
+### API de health
+
+```python
+import requests
+import json
+import sys
+
+def test_healt():
+    x = requests.get('http://0.0.0.0:8080/api/health')
+    return x.json()
+
+health = test_healt()
+print(health)
+```
+
+### API de query a tu modelo
+```python
+import requests
+import json
+import sys
+
+def test_query():
+    url = 'http://0.0.0.0:8080/api/inference'
+    payload = { "query": "Oye haz la función de fibonacci en TypeScript",
+                "system_prompt": "Eres un asistente útil y conciso.",
+                "stream": False}
+    x = requests.post(url, json=payload)
+    return x.json()
+
+query = test_query()
+print(query)
+```
+
+### API de query a tu modelo con respuesta en Stream
+```python
+import requests
+import json
+import sys
+
+def test_query_stream():
+    url = 'http://0.0.0.0:8080/api/inference'
+    payload = {
+        "query": "Oye haz la función de fibonacci en TypeScript",
+        "system_prompt": "Eres un asistente útil y conciso.",
+        "stream" : True
+    }
+    
+    # Usar stream=True en la petición para recibir la respuesta por partes
+    response = requests.post(url, json=payload, stream=True)
+    
+    if response.status_code == 200:
+        # Procesar la respuesta SSE línea por línea
+        for line in response.iter_lines():
+            if line:
+                # Las líneas SSE comienzan con "data: "
+                line = line.decode('utf-8')
+                if line.startswith('data:'):
+                    # Extraer el JSON después de "data: "
+                    json_str = line[6:]  # Saltamos los primeros 6 caracteres ("data: ")
+                    try:
+                        chunk_data = json.loads(json_str)
+                        chunk = chunk_data.get('chunk', '')
+                        sys.stdout.write(chunk)
+                        sys.stdout.flush()
+                    except json.JSONDecodeError as e:
+                        print(f"Error decodificando JSON: {e}")
+    else:
+        print(f"Error: {response.status_code}")
+        try:
+            print(response.json())
+        except:
+            print(response.text)
+
+query = test_query_stream()
+print(query)
+
 ```

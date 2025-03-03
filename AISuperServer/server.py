@@ -13,6 +13,7 @@ class ServerConfigModels:
     model: str = None
     stream: bool = None
     format: str = None
+    Multimodal: bool = None
 
 def create_app(config=None):
     """
@@ -38,6 +39,7 @@ def create_app(config=None):
         
         query = data['query']
         system_prompt = data['system_prompt'] if 'system_prompt' in data else None
+        image_path = data['image_path'] if 'image_path' in data else None
         
         # Obtener configuración del servidor
         server_config = app.config['SERVER_CONFIG']
@@ -51,18 +53,20 @@ def create_app(config=None):
         # Usar format de la configuración del servidor si existe, de lo contrario usar el de la petición
         format = server_config.format if server_config.format is not None else data.get('format', None)
 
+        Multimodal = server_config.Multimodal if server_config.Multimodal is not None else data.get('multimodal')
+
         try:
-            Inference = AILocal(model, stream, format)
+            Inference = AILocal(model, stream, format, Multimodal)
             if stream:
                 def generate():
-                    for chunk in Inference.queryStream(query, system_prompt):
+                    for chunk in Inference.queryStream(query, system_prompt, image_path):
                         yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         
                 return Response(stream_with_context(generate()), 
                                 mimetype='text/event-stream')
 
             else:
-                return jsonify({'response': Inference.query(query, system_prompt)})
+                return jsonify({'response': Inference.query(query, system_prompt, image_path)})
             
         except Exception as e:
             return jsonify({'error': str(e)}), 500

@@ -6,7 +6,8 @@ from .waitress_server import *
 def create_inference_server(
     model=None, 
     stream=None, 
-    format=None, 
+    format=None,
+    multimodal=None, 
     host='0.0.0.0', 
     port=8080, 
     threads=5,
@@ -31,7 +32,8 @@ def create_inference_server(
     config = ServerConfigModels(
         model=model,
         stream=stream,
-        format=format
+        format=format,
+        Multimodal=multimodal
     )
     
     # Crear la aplicación
