@@ -1,7 +1,7 @@
 from Server import create_inference_server as InferenceServer
 
 app = InferenceServer(
-    model='llama3',
+    model='deepseek-r1',
     stream=True,
     port=8080,
     enable_memory_monitor=True

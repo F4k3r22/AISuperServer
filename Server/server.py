@@ -2,10 +2,11 @@
 Módulo para crear y configurar la aplicación Flask para el servidor de inferencia
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, stream_with_context, Response
 from flask_cors import CORS
 from .localmodel import AILocal
 from dataclasses import dataclass
+import json
 
 @dataclass
 class ServerConfigModels:
@@ -53,8 +54,13 @@ def create_app(config=None):
         try:
             Inference = AILocal(model, stream, format)
             if stream:
-                # Cambiado de queryStream a query_stream para seguir convenciones PEP8
-                return jsonify({'response': list(Inference.query_stream(query, system_prompt))})
+                def generate():
+                    for chunk in Inference.queryStream(query, system_prompt):
+                        yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+        
+                return Response(stream_with_context(generate()), 
+                                mimetype='text/event-stream')
+
             else:
                 return jsonify({'response': Inference.query(query, system_prompt)})
             
