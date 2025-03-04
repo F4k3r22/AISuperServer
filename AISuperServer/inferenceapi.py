@@ -24,7 +24,7 @@ class InferenceClient:
         except requests.RequestException as e:
             return {"error": str(e)}
 
-    def Query(self, query: str, systemprompt: str = None, image_path: str = None, stream: bool = False):
+    def Query(self, query: str, systemprompt: str = None, image_path = None, stream: bool = False):
         if stream:
             return self.QueryStream(query=query, systemprompt=systemprompt)
         url = f"{self.baseurl}/api/inference"
@@ -54,7 +54,7 @@ class InferenceClient:
 
 
 
-    def QueryStream(self, query: str, systemprompt: str = None, image_path: str = None):
+    def QueryStream(self, query: str, systemprompt: str = None, image_path = None):
         url = f"{self.baseurl}/api/inference"
         payload = {
             "query": query,

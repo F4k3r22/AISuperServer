@@ -4,7 +4,7 @@ app = SuperServer(
     model='llama3.2-vision',
     stream=True,
     multimodal=True,
-    port='8080',
+    port=8080,
     api_key_required=False,
     enable_memory_monitor=True
 )
