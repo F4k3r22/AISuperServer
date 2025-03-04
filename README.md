@@ -4,7 +4,16 @@
   <img src="static/Logo.png" alt="AISuperServer Logo" width="200"/>
 </div>
 
-Es un experimento simple para crear una interfaz simple y rápida de server de Inferencia en Local, con Flask, Ollama, etc.
+AISuperServer es un servidor de inferencia local potente y fácil de usar, diseñado para ejecutar modelos de IA con Ollama. Proporciona una API REST robusta construida con Flask que permite:
+
+- 🚀 Despliegue rápido de modelos de IA locales
+- 🔑 Autenticación configurable mediante API keys
+- 📡 Soporte para respuestas en streaming
+- 🖼️ Capacidades multimodales para procesamiento de imágenes
+- 🛠️ Configuración flexible y monitoreo de recursos
+
+Perfecto para desarrolladores que necesitan una solución ligera y eficiente para servir modelos de IA localmente.
+
 
 #### Instalación via Pypi
 
