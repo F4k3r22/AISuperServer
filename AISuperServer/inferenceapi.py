@@ -28,19 +28,16 @@ class InferenceClient:
         if stream:
             return self.QueryStream(query=query, systemprompt=systemprompt)
         url = f"{self.baseurl}/api/inference"
+        payload = {
+            "query": query,
+            "systemprompt": systemprompt,
+            "stream": True
+            }
         if self.multimodal and image_path:
-            payload = {
-                "query": query,
-                "systemprompt": systemprompt,
-                "image_path" : image_path,
-                "stream": False
-            }
-        else:
-            payload = {
-                "query": query,
-                "systemprompt": systemprompt,
-                "stream": False
-            }
+            # Si image_path es un objeto Path, asegúrate de convertirlo a string:
+            if not isinstance(image_path, str):
+                image_path = str(image_path)
+            payload["image_path"] = image_path
         try:
             if self.api_key is not None:
                 response = requests.post(url=url, headers=self.header, json=payload)
@@ -60,20 +57,13 @@ class InferenceClient:
             "query": query,
             "systemprompt": systemprompt,
             "stream": True
-        }
+            }
         if self.multimodal and image_path:
-            payload = {
-                "query": query,
-                "systemprompt": systemprompt,
-                "image_path" : image_path,
-                "stream": False
-            }
-        else:
-            payload = {
-                "query": query,
-                "systemprompt": systemprompt,
-                "stream": False
-            }
+            # Si image_path es un objeto Path, asegúrate de convertirlo a string:
+            if not isinstance(image_path, str):
+                image_path = str(image_path)
+            payload["image_path"] = image_path
+        
         try:
             if self.api_key is not None:
                 response = requests.post(url=url, headers=self.header, json=payload, stream=True)
