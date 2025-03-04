@@ -26,7 +26,8 @@ class InferenceClient:
 
     def Query(self, query: str, systemprompt: str = None, image_path = None, stream: bool = False):
         if stream:
-            return self.QueryStream(query=query, systemprompt=systemprompt)
+            return self.QueryStream(query=query, systemprompt=systemprompt, image_path=image_path)
+
         url = f"{self.baseurl}/api/inference"
         payload = {
             "query": query,
