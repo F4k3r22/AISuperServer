@@ -47,6 +47,7 @@ app = SuperServer(
     model='deepseek-r1', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
     stream=True,
     port=8080, # Recuerda el puerto donde haz configurado tu servidor para hacer las peticiones
+    api_key_required=False,
     enable_memory_monitor=True
 )
 ```
@@ -136,6 +137,17 @@ query = test_query_stream()
 print(query)
 
 ```
+
+# Documentación 📚
+
+## Documentación Detallada
+En la carpeta [`/tests`](./tests) encontrarás ejemplos completos y documentación detallada sobre:
+
+- 🔧 Configuración avanzada del servidor
+- 🔑 Implementación de autenticación con API keys
+- 🔄 Manejo de respuestas en streaming
+- 🖼️ Procesamiento de imágenes (modo multimodal)
+- 📝 Ejemplos prácticos de cada funcionalidad
 
 # Donaciones 💸
 
