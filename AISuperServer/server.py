@@ -7,6 +7,8 @@ from flask_cors import CORS
 from .localmodel import AILocal
 from dataclasses import dataclass
 import json
+from functools import wraps
+from typing import Callable, Any
 
 @dataclass
 class ServerConfigModels:
@@ -14,6 +16,8 @@ class ServerConfigModels:
     stream: bool = None
     format: str = None
     Multimodal: bool = None
+    api_key_required: bool = None
+    api_keys: list = None
 
 def create_app(config=None):
     """
@@ -30,8 +34,57 @@ def create_app(config=None):
     
     # Configuración global para los modelos
     app.config['SERVER_CONFIG'] = config or ServerConfigModels()
+
+    def require_api_key(f: Callable) -> Callable:
+        @wraps(f)
+        def decorated_function(*args: Any, **kwargs: Any) -> Any:
+            server_config = app.config.get('SERVER_CONFIG')
+            
+            if not server_config:
+                return jsonify({
+                    "error": "Server configuration missing",
+                    "message": "Server is not properly configured"
+                }), 500
+
+            provided_key = request.headers.get('X-API-Key')
+            
+            if not provided_key:
+                return jsonify({
+                    "error": "API Key missing",
+                    "message": "X-API-Key header is required"
+                }), 401
+
+            if not server_config.api_keys or not isinstance(server_config.api_keys, list):
+                return jsonify({
+                    "error": "Invalid server configuration",
+                    "message": "API keys are not properly configured"
+                }), 500
+
+            if provided_key not in server_config.api_keys:
+                return jsonify({
+                    "error": "Invalid API Key",
+                    "message": "The provided API key is not valid"
+                }), 403
+
+            return f(*args, **kwargs)
+        return decorated_function
+
+    def conditional_require_api_key(f: Callable) -> Callable:
+        @wraps(f)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            server_config = app.config.get('SERVER_CONFIG')
+            
+            if not server_config:
+                return f(*args, **kwargs)
+
+            if server_config.api_key_required:
+                return require_api_key(f)(*args, **kwargs)
+            
+            return f(*args, **kwargs)
+        return wrapper
     
     @app.route('/api/inference', methods=['POST'])
+    @conditional_require_api_key
     def api():
         data = request.get_json()
         if not data:
@@ -73,6 +126,7 @@ def create_app(config=None):
     
     # Endpoint para verificar estado del servidor
     @app.route('/api/health', methods=['GET'])
+    @conditional_require_api_key
     def health_check():
         return jsonify({
             'status': 'ok',

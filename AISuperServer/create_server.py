@@ -9,7 +9,9 @@ def create_inference_server(
     format=None,
     multimodal=None, 
     host='0.0.0.0', 
-    port=8080, 
+    port=8080,
+    api_key_required: bool = None,
+    api_keys: list = None,
     threads=5,
     enable_memory_monitor=True
 ):
@@ -22,6 +24,8 @@ def create_inference_server(
         format (str, optional): Formato de salida por defecto
         host (str): Host para el servidor
         port (int): Puerto para el servidor
+        api_key_required (bool): Activar si quieres que tu API requiera de API Keys para hacer peticiones
+        api_keys (list): Lista de las API keys validas (Aún en mejora)
         threads (int): Número de hilos para Waitress
         enable_memory_monitor (bool): Activar monitoreo de memoria
         
@@ -33,7 +37,9 @@ def create_inference_server(
         model=model,
         stream=stream,
         format=format,
-        Multimodal=multimodal
+        Multimodal=multimodal,
+        api_key_required=api_key_required,
+        api_keys=api_keys
     )
     
     # Crear la aplicación
