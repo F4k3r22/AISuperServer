@@ -1,6 +1,6 @@
-from AISuperServer import SuperServer
+from AISuperServer import SuperServerFlask
 
-app = SuperServer(
+app = SuperServerFlask(
     model='llama3.2-vision',
     stream=True,
     multimodal=True,

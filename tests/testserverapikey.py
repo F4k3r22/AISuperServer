@@ -1,4 +1,4 @@
-from AISuperServer import SuperServer
+from AISuperServer import SuperServerFlask
 import random 
 import string
 
@@ -11,7 +11,7 @@ def CreateDummyAPIKey():
 
 api_keys = ['dummy-apikey-OTXEYCZNS4NBR8YA9V0PBPV4VST2FBAE3PEZDKBDXKCQ88CSTIPI5NPOLN0ZN0CG', 'dummy-apikey-4VQF9L4NFF71GAW4NTOY6EPZUSE6SVNEKW3DHBHWGZIZM8IS8VTT2ZUR75Z0VBZI']
 
-app = SuperServer(
+app = SuperServerFlask(
     model='llama3.2-vision',
     stream=True,
     multimodal=True,

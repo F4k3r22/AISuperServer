@@ -1,6 +1,6 @@
-from AISuperServer import SuperServer
+from AISuperServer import SuperServerFlask
 
-app = SuperServer(
+app = SuperServerFlask(
     model='deepseek-r1',
     stream=True,
     port=8080,

@@ -4,7 +4,7 @@
   <img src="static/Logo.png" alt="AISuperServer Logo" width="200"/>
 </div>
 
-AISuperServer es un servidor de inferencia local potente y fácil de usar, diseñado para ejecutar modelos de IA con Ollama. Proporciona una API REST robusta construida con Flask que permite:
+AISuperServer es un servidor de inferencia local potente y fácil de usar, diseñado para ejecutar modelos de IA con Ollama. Proporciona una API REST robusta construida con Flask o FastAPI que permite:
 
 - 🚀 Despliegue rápido de modelos de IA locales
 - 🔑 Autenticación configurable mediante API keys
@@ -13,7 +13,6 @@ AISuperServer es un servidor de inferencia local potente y fácil de usar, dise�
 - 🛠️ Configuración flexible y monitoreo de recursos
 
 Perfecto para desarrolladores que necesitan una solución ligera y eficiente para servir modelos de IA localmente.
-
 
 #### Instalación via Pypi
 
@@ -50,9 +49,9 @@ Ollama pull <modelo a usar>
 ## Levantar tu servidor
 
 ```python
-from AISuperServer import SuperServer
+from AISuperServer import SuperServerFlask
 
-app = SuperServer(
+app = SuperServerFlask(
     model='deepseek-r1', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
     stream=True,
     port=8080, # Recuerda el puerto donde haz configurado tu servidor para hacer las peticiones
@@ -150,6 +149,7 @@ print(query)
 # Cliente API de SuperServer
 
 ## Cliente API con modelos de Texto
+
 ```python
 from AISuperServer import SuperServerClient
 
@@ -163,6 +163,7 @@ query = client.Query('Oye explicame la secuencia de Fibonacci, como si se lo exp
 ```
 
 ## Cliente API con modelos multimodales
+
 ```python
 from AISuperServer import SuperServerClient
 from pathlib import Path
@@ -187,6 +188,7 @@ query = client.Query('Oye describe la imagen y dime que hay de llamativo y de qu
 # Documentación 📚
 
 ## Documentación Detallada
+
 En la carpeta [`/tests`](./tests) encontrarás ejemplos completos y documentación detallada sobre:
 
 - 🔧 Configuración avanzada del servidor
