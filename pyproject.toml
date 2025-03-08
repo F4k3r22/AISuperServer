@@ -1,10 +1,13 @@
 [project]
 name = "AISuperServer"
-version = "0.1.95"
+version = "0.1.96"
 description = "Es un experimento simple para crear una interfaz simple y rápida de server de Inferencia en Local"
 authors = [
     { name = "Rivera.ai/Fredy Rivera", email = "riveraaai200678@gmail.com" }
 ]
+
+readme = "README.md"
+
 requires-python = ">=3.8"
 dependencies = [
     "Flask",
