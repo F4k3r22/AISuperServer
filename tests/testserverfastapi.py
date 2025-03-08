@@ -9,5 +9,5 @@ app = SuperServerFastAPI(
     enable_memory_monitor=True
 )
 
-# Para hacer las request puedes usar los ejemplos en los archivos de testrequest.py (pero no el multimodal)
+# Para hacer las request puedes usar los ejemplos en los archivos de testrequest.py tambien con la versión multimodal
 # Y hay unos errores raros al hacer peticiones a la API de inferencia desde el Swagger UI
