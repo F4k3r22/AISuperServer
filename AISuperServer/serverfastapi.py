@@ -49,7 +49,7 @@ def create_app_FastAPI(config=None):
         allow_headers=["*"],  # Todos los headers
     )
 
-    app.config['SERVER_CONFIG'] = config or ServerConfigModels()
+    app_config = config or ServerConfigModels()
 
     @app.post('/api/inference')
     def api(jsonbody: JSONBodyQueryAPI):
@@ -58,7 +58,7 @@ def create_app_FastAPI(config=None):
         image_path = jsonbody.image_path
         
         # Obtener configuración del servidor
-        server_config = app.config['SERVER_CONFIG']
+        server_config = app_config
         
         # Usar modelo de la configuración del servidor si existe, de lo contrario usar el de la petición
         model = server_config.model if server_config.model is not None else jsonbody.model
@@ -90,9 +90,9 @@ def create_app_FastAPI(config=None):
         return {
             "status": "ok",
             "config": {
-                "model": app.config['SERVER_CONFIG'].model,
-                "stream": app.config['SERVER_CONFIG'].stream,
-                "format": app.config['SERVER_CONFIG'].format
+                "model": app_config.model,
+                "stream": app_config.stream,
+                "format": app_config.format
             }
         }
     

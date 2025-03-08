@@ -9,6 +9,7 @@ import psutil
 import os
 import threading
 import time
+import string
 
 # Configuración de logging
 def setup_logging():
@@ -82,12 +83,18 @@ def run_uvicorn_server(
         cleanup_thread.start()
         logger.info("Monitor de memoria activado")
     
-    logger.info(f"Iniciando servidor Waitress en {host}:{port}...")
+    logger.info(f"Iniciando servidor Uvicorn en {host}:{port}...")
 
-    return uvicorn.run(app, 
-                    host=host, 
-                    port=port, 
-                    workers=workers, 
-                    timeout_keep_alive=channel_timeout,
-                    server_header=server_header,
-                    headers=headers)
+    config = uvicorn.Config(
+        app=app,
+        host=host,
+        workers=workers,
+        port=port,
+        timeout_keep_alive=channel_timeout,
+        server_header=server_header,
+        headers=headers
+    )
+
+    server = uvicorn.Server(config)
+
+    return server.serve()

@@ -3,6 +3,7 @@ from .server import *
 from .waitress_server import *
 from .uvicorn_server import *
 from .serverfastapi import *
+import asyncio
 
 # Función principal para iniciar un servidor completo
 def create_inference_serverFlask(
@@ -100,13 +101,13 @@ def create_inference_serverFastAPI(
     # Crear la aplicación
     app = create_app_FastAPI(config)
     
-    # Ejecutar con Waitress en un hilo separado
-    run_uvicorn_server(
+    
+    asyncio.run(run_uvicorn_server(
         app, 
         host=host, 
         port=port, 
         workers=threads,
         enable_memory_monitor=enable_memory_monitor
-    )
+    ))
     
     return app
