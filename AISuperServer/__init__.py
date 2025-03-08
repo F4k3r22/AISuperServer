@@ -7,4 +7,3 @@ __version__ = '0.1.8'
 from .localmodel import AILocal
 from .create_server import create_inference_server as SuperServer
 from .inferenceapi import InferenceClient as SuperServerClient
-from .diff import TextToImagePipelineSD3
