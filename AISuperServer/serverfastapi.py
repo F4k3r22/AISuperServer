@@ -52,7 +52,7 @@ def create_app_FastAPI(config=None):
     app_config = config or ServerConfigModels()
 
     @app.post('/api/inference')
-    def api(jsonbody: JSONBodyQueryAPI):
+    async def api(jsonbody: JSONBodyQueryAPI):
         query = jsonbody.query
         system_prompt = jsonbody.system_prompt
         image_path = jsonbody.image_path
@@ -86,7 +86,7 @@ def create_app_FastAPI(config=None):
             raise HTTPException(status_code=500, detail=str(e))
 
     @app.get('/api/health')
-    def health_check():
+    async def health_check():
         return {
             "status": "ok",
             "config": {
