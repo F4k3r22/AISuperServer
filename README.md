@@ -43,7 +43,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 ### Descarga del modelo a usar
 
 ```
-Ollama pull <modelo a usar>
+ollama pull <modelo a usar>
 ```
 
 ## Levantar tu servidor
@@ -61,6 +61,7 @@ app = SuperServerFlask(
 ```
 
 ## Levantar tu servidor con FastAPI
+
 ```python
 from AISuperServer import SuperServerFastAPI
 
@@ -75,7 +76,6 @@ app = SuperServerFastAPI(
 
 # Para hacer las request puedes usar los ejemplos en los archivos de testrequest.py tambien con la versión multimodal
 # Tambien con el cliente API de SuperServer
-# Y hay unos errores raros al hacer peticiones a la API de inferencia desde el Swagger UI
 ```
 
 Asi de facil es levantar tu servidor de inferencia local con AISuperServer en menos de 20 lineas de código

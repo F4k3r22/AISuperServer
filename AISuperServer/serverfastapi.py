@@ -52,7 +52,7 @@ def create_app_FastAPI(config=None):
     app_config = config or ServerConfigModels()
 
     @app.post('/api/inference')
-    async def api(jsonbody: JSONBodyQueryAPI):
+    async def api(jsonbody: JSONBodyQueryAPI): # Hacia falta poner el async para que Swagger UI pudiera hacer peticiones correctamente
         query = jsonbody.query
         system_prompt = jsonbody.system_prompt
         image_path = jsonbody.image_path
