@@ -65,17 +65,17 @@ app = SuperServerFlask(
 ```python
 from AISuperServer import SuperServerFastAPI
 
+api_keys = ['dummy-apikey-OTXEYCZNS4NBR8YA9V0PBPV4VST2FBAE3PEZDKBDXKCQ88CSTIPI5NPOLN0ZN0CG', 'dummy-apikey-4VQF9L4NFF71GAW4NTOY6EPZUSE6SVNEKW3DHBHWGZIZM8IS8VTT2ZUR75Z0VBZI']
+
 app = SuperServerFastAPI(
-    model='deepseek-r1', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
+    model='qwq:32b', # Recuerda que aqui vas a usar el modelo que descargaste anteriormente con el Ollama pull
     stream=True,
     port=8080, # Recuerda el puerto donde haz configurado tu servidor para hacer las peticiones
     threads=3,
-    api_key_required=False, # El uso de API Keys aún no esta implementado en la versión de FastAPI
+    api_key_required=True, # La opción de API keys ya esta disponible en FastAPI tambien 
+    api_keys=api_keys, 
     enable_memory_monitor=True
 )
-
-# Para hacer las request puedes usar los ejemplos en los archivos de testrequest.py tambien con la versión multimodal
-# Tambien con el cliente API de SuperServer
 ```
 
 Asi de facil es levantar tu servidor de inferencia local con AISuperServer en menos de 20 lineas de código
