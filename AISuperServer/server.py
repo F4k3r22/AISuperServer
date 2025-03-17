@@ -14,7 +14,7 @@ from typing import Callable, Any
 class ServerConfigModels:
     model: str = None
     stream: bool = None
-    format: str = None
+    format_response: str = None
     Multimodal: bool = None
     api_key_required: bool = None
     api_keys: list = None
@@ -104,12 +104,12 @@ def create_app(config=None):
         stream = server_config.stream if server_config.stream is not None else data.get('stream', False)
         
         # Usar format de la configuración del servidor si existe, de lo contrario usar el de la petición
-        format = server_config.format if server_config.format is not None else data.get('format', None)
+        format_response = server_config.format if server_config.format_response is not None else data.get('format', None)
 
         Multimodal = server_config.Multimodal if server_config.Multimodal is not None else data.get('multimodal')
 
         try:
-            Inference = AILocal(model, stream, format, Multimodal)
+            Inference = AILocal(model, stream, format_response, Multimodal)
             if stream:
                 def generate():
                     for chunk in Inference.queryStream(query, system_prompt, image_path):

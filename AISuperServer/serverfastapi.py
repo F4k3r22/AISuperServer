@@ -24,7 +24,7 @@ class JSONBodyQueryAPI(BaseModel):
 class ServerConfigModels:
     model: Optional[str] = None
     stream: Optional[bool] = None
-    format: Optional[str] = None
+    format_response: Optional[str] = None
     Multimodal: Optional[bool] = None
     api_key_required: Optional[bool] = None
     api_keys: Optional[List[str]] = None
@@ -129,12 +129,12 @@ def create_app_FastAPI(config=None):
         stream = server_config.stream if server_config.stream is not None else jsonbody.stream
         
         # Usar format de la configuración del servidor si existe, de lo contrario usar el de la petición
-        format = server_config.format if server_config.format is not None else jsonbody.format
+        format_response = server_config.format_response if server_config.format_response is not None else jsonbody.format
         
         Multimodal = server_config.Multimodal if server_config.Multimodal is not None else jsonbody.multimodal
         
         try:
-            Inference = AILocal(model, stream, format, Multimodal)
+            Inference = AILocal(model, stream, format_response, Multimodal)
             if stream:
                 def generate():
                     for chunk in Inference.queryStream(query, system_prompt, image_path):
@@ -154,7 +154,7 @@ def create_app_FastAPI(config=None):
             "config": {
                 "model": app_config.model,
                 "stream": app_config.stream,
-                "format": app_config.format
+                "format": app_config.format_response
             }
         }
     

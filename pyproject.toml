@@ -1,6 +1,6 @@
 [project]
 name = "AISuperServer"
-version = "0.1.98"
+version = "0.1.99"
 description = "Es un experimento simple para crear una interfaz simple y rápida de server de Inferencia en Local"
 authors = [
     { name = "Rivera.ai/Fredy Rivera", email = "riveraaai200678@gmail.com" }

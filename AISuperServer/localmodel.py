@@ -1,7 +1,7 @@
 from ollama import chat, ChatResponse
 
 class AILocal:
-    def __init__(self, model, stream=False, format=None, Multimodal=False):
+    def __init__(self, model, stream=False, format_response=None, Multimodal=False):
         """
         Inicialiación de la clase de AI Local:
         Args:
@@ -12,7 +12,7 @@ class AILocal:
         """
         self.model = model
         self.stream = stream
-        self.format = format
+        self.format = format_response
         #if self.format != 'json':
         #    raise ValueError('Formato no soportado')
         self.multimodal = Multimodal

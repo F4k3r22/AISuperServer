@@ -9,7 +9,7 @@ import asyncio
 def create_inference_serverFlask(
     model=None, 
     stream=None, 
-    format=None,
+    format_response=None,
     multimodal=None, 
     host='0.0.0.0', 
     port=8080,
@@ -24,7 +24,7 @@ def create_inference_serverFlask(
     Args:
         model (str, optional): Modelo por defecto a utilizar
         stream (bool, optional): Si se debe usar streaming por defecto
-        format (str, optional): Formato de salida por defecto
+        format_response (str, optional): Formato de salida por defecto
         host (str): Host para el servidor
         port (int): Puerto para el servidor
         api_key_required (bool): Activar si quieres que tu API requiera de API Keys para hacer peticiones
@@ -39,7 +39,7 @@ def create_inference_serverFlask(
     config = ServerConfigModels(
         model=model,
         stream=stream,
-        format=format,
+        format_response=format_response,
         Multimodal=multimodal,
         api_key_required=api_key_required,
         api_keys=api_keys
@@ -62,7 +62,7 @@ def create_inference_serverFlask(
 def create_inference_serverFastAPI(
     model=None, 
     stream=None, 
-    format=None,
+    format_response=None,
     multimodal=None, 
     host='0.0.0.0', 
     port=8080,
@@ -77,7 +77,7 @@ def create_inference_serverFastAPI(
     Args:
         model (str, optional): Modelo por defecto a utilizar
         stream (bool, optional): Si se debe usar streaming por defecto
-        format (str, optional): Formato de salida por defecto
+        format_response (str, optional): Formato de salida por defecto
         host (str): Host para el servidor
         port (int): Puerto para el servidor
         api_key_required (bool): Activar si quieres que tu API requiera de API Keys para hacer peticiones
@@ -92,7 +92,7 @@ def create_inference_serverFastAPI(
     config = ServerConfigModels(
         model=model,
         stream=stream,
-        format=format,
+        format_response=format_response,
         Multimodal=multimodal,
         api_key_required=api_key_required,
         api_keys=api_keys
