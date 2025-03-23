@@ -1,7 +1,8 @@
 from ollama import chat, ChatResponse
+import os
 
 class AILocal:
-    def __init__(self, model, stream=False, format_response=None, Multimodal=False):
+    def __init__(self, model, stream=False, format_response=None, Multimodal=False, parallel_requests: str = "4"):
         """
         Inicialiación de la clase de AI Local:
         Args:
@@ -13,6 +14,8 @@ class AILocal:
         self.model = model
         self.stream = stream
         self.format = format_response
+        self.parallel_requests = parallel_requests
+        os.environ["OLLAMA_NUM_PARALLEL"] = self.parallel_requests
         #if self.format != 'json':
         #    raise ValueError('Formato no soportado')
         self.multimodal = Multimodal

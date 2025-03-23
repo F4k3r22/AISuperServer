@@ -15,6 +15,7 @@ def create_inference_serverFlask(
     port=8080,
     api_key_required: bool = None,
     api_keys: list = None,
+    parallel_requests: Optional[str] = "4",
     threads=5,
     enable_memory_monitor=True
 ):
@@ -42,7 +43,8 @@ def create_inference_serverFlask(
         format_response=format_response,
         Multimodal=multimodal,
         api_key_required=api_key_required,
-        api_keys=api_keys
+        api_keys=api_keys,
+        parallel_requests=parallel_requests
     )
     
     # Crear la aplicación
@@ -68,6 +70,7 @@ def create_inference_serverFastAPI(
     port=8080,
     api_key_required: bool = None,
     api_keys: list = None,
+    parallel_requests: Optional[str] = "4",
     threads=5,
     enable_memory_monitor=True
 ):
@@ -95,7 +98,8 @@ def create_inference_serverFastAPI(
         format_response=format_response,
         Multimodal=multimodal,
         api_key_required=api_key_required,
-        api_keys=api_keys
+        api_keys=api_keys,
+        parallel_requests=parallel_requests
     )
     
     # Crear la aplicación

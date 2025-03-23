@@ -8,7 +8,7 @@ from .localmodel import AILocal
 from dataclasses import dataclass
 import json
 from functools import wraps
-from typing import Callable, Any
+from typing import Callable, Any, Optional
 
 @dataclass
 class ServerConfigModels:
@@ -18,6 +18,7 @@ class ServerConfigModels:
     Multimodal: bool = None
     api_key_required: bool = None
     api_keys: list = None
+    parallel_requests: Optional[str] = "4"
 
 def create_app(config=None):
     """
@@ -108,8 +109,10 @@ def create_app(config=None):
 
         Multimodal = server_config.Multimodal if server_config.Multimodal is not None else data.get('multimodal')
 
+        parallel_requests = server_config.parallel_requests if server_config.parallel_requests is not None else data.get('parallel_requests')
+
         try:
-            Inference = AILocal(model, stream, format_response, Multimodal)
+            Inference = AILocal(model, stream, format_response, Multimodal, parallel_requests=parallel_requests)
             if stream:
                 def generate():
                     for chunk in Inference.queryStream(query, system_prompt, image_path):

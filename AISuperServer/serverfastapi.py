@@ -28,6 +28,7 @@ class ServerConfigModels:
     Multimodal: Optional[bool] = None
     api_key_required: Optional[bool] = None
     api_keys: Optional[List[str]] = None
+    parallel_requests: Optional[str] = "4"
 
 def create_app_FastAPI(config=None):
     """
@@ -132,9 +133,11 @@ def create_app_FastAPI(config=None):
         format_response = server_config.format_response if server_config.format_response is not None else jsonbody.format
         
         Multimodal = server_config.Multimodal if server_config.Multimodal is not None else jsonbody.multimodal
+
+        parallel_requests = server_config.parallel_requests if server_config.parallel_requests is not None else "4"
         
         try:
-            Inference = AILocal(model, stream, format_response, Multimodal)
+            Inference = AILocal(model, stream, format_response, Multimodal, parallel_requests)
             if stream:
                 def generate():
                     for chunk in Inference.queryStream(query, system_prompt, image_path):
